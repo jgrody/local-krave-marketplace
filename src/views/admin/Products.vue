@@ -98,14 +98,12 @@
           <td>{{ props.item.available }}</td>
           <td class="">
             <v-icon
-              small
-              class="mr-2"
+              class="mr-3"
               @click="editItem(props.item)"
             >
               edit
             </v-icon>
             <v-icon
-              small
               @click="deleteItem(props.item)"
             >
               delete
