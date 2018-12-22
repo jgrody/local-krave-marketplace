@@ -1,19 +1,20 @@
 <template>
   <v-snackbar
-    v-model="show"
+    v-model="showing"
     :bottom="true"
     :right="true"
     :vertical="false"
     :color="color || null"
+    :timeout="2000"
   >
     {{ text }}
-    <!-- <v-btn
-      color="pink"
+    <v-btn
       flat
-      @click="close"
+      color="white"
+      @click="showing = false"
     >
-      Close
-    </v-btn> -->
+      close
+    </v-btn>
   </v-snackbar>
 </template>
 
@@ -24,6 +25,16 @@
       'text',
       'color',
     ],
+    computed: {
+      showing: {
+        get: function (){
+          return this.show
+        },
+        set: function (value){
+          this.$emit('closeToast', value)
+        }
+      }
+    }
   }
 </script>
 

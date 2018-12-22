@@ -25,6 +25,16 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12>
+                    <v-alert
+                      :value="errors.length"
+                      type="error"
+                      v-for="error in errors"
+                    >
+                      {{error}}
+                    </v-alert>
+                  </v-flex>
+                    
+                  <v-flex xs12>
                     <v-text-field
                       v-model="invite.email"
                       label="Email"
@@ -45,7 +55,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-              <v-btn color="blue darken-1" flat @click="save" :disabled="!invite.email || !invite.number">Save</v-btn>
+              <v-btn color="blue darken-1" flat @click="save" :disabled="!invite.email || !invite.number || saving">Save</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -81,6 +91,13 @@
           </v-alert>
         </template>
       </v-data-table>
+
+      <snackbar
+        :show="snackbar"
+        :text="snackbarText"
+        :color="snackbarColor"
+        v-on:closeToast="snackbar = false"
+      ></snackbar>
     </v-content>
   </v-app>
 </template>
@@ -90,12 +107,14 @@ import AdminMenu from './Menu.vue'
 import AdminToolbar from './Toolbar.vue'
 import { INVITES_COLLECTION } from '../../configs'
 import { VALID_EMAIL, VALID_PHONE } from '../../helpers/regexes'
+import Snackbar from '../../components/Snackbar.vue'
 
 export default {
   name: 'Invites',
   components: {
     AdminMenu,
-    AdminToolbar
+    AdminToolbar,
+    Snackbar
   },
   data () {
     return {
@@ -104,6 +123,10 @@ export default {
       },
       dialog: false,
       loading: true,
+      saving: false,
+      snackbar: false,
+      snackbarText: '',
+      snackbarColor: '',
       headers: [
         { text: 'Email', value: 'email', align: 'left', width: '30%'},
         { text: 'Phone', value: 'number', align: 'left', width: '30%'},
@@ -148,7 +171,9 @@ export default {
       }, 300)
     },
     save(){
+      this.errors = []
       let inviteRef = INVITES_COLLECTION.doc(this.invite.email)
+      this.$data.saving = true
       inviteRef.get()
         .then(invite => {
           if (!invite.exists) {
@@ -162,12 +187,18 @@ export default {
             `)
           }
         })
+        .finally(() => delete this.$data.saving)
     },
     remove(invite){
       return confirm('Are you sure you want to delete this invite?') && 
         INVITES_COLLECTION.doc(invite.email)
         .delete()
         .then(() => this.close())
+        .then(() => {
+          this.snackbarText = 'Invite deleted.'
+          this.snackbarColor = 'red'
+          this.snackbar = true
+        })
     },
     resend(){
       
