@@ -29,6 +29,7 @@
                       :value="errors.length"
                       type="error"
                       v-for="error in errors"
+                      key="error"
                     >
                       {{error}}
                     </v-alert>
