@@ -14,6 +14,12 @@ const router = new Router({
       component: Home
     },
     {
+      path: "/join",
+      name: "join",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/Join.vue")
+    },
+    {
       path: "/admin",
       name: "products",
       component: () =>
