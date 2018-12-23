@@ -11,7 +11,7 @@
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-container fill-height fluid justify-center class="background">
-        <v-flex xs8>
+        <v-flex xs10 sm8 md7>
           <div class="cta mb-5 text-xs-center">
             <h3 class="display-1 mb-0 font-weight-light mb-5">
               Join and get <span class="font-weight-bold">20% discounts</span> on all purchases and access to our members-only Marketplace for just $20/month.
@@ -44,7 +44,7 @@
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs12 md2>
-                  <v-btn block color="orange">
+                  <v-btn block large color="deep-orange darken-2 ma-0">
                     Join
                   </v-btn>
                 </v-flex>
@@ -93,7 +93,7 @@
     padding: 0;
   }
   .background {
-    background-image: url(https://scontent-lax3-1.cdninstagram.com/vp/739d95b1a47ba4c5a504ec356af26bf7/5CAC5009/t51.2885-15/e35/36910254_2008362826140409_3771233984583827456_n.jpg?_nc_ht=scontent-lax3-1.cdninstagram.com);
+    background-image: url(https://scontent-lax3-1.cdninstagram.com/vp/cfa38e9986553d3f3d3475abb6de94d6/5CA0748D/t51.2885-15/e35/36974204_1747914785316639_2698666250023731200_n.jpg?_nc_ht=scontent-lax3-1.cdninstagram.com);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
